@@ -1,4 +1,6 @@
 <?php
+require_once '../../app/config/database.php';
+require_once '../../app/controllers/ShippingController.php';
 $pendingShipments = $pdo->query("
     SELECT o.id, l.brand, l.model, o.tracking_number
     FROM orders o
