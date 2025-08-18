@@ -20,4 +20,16 @@ class ShippingController {
         
         return $response['label_url'];
     }
+
+    public function getShippingStatus($trackingNumber) {
+    $response = $this->callFedExApi("/track", [
+        'tracking_number' => $trackingNumber
+    ]);
+    
+    return [
+        'status' => $response['latest_status'],
+        'estimated_delivery' => $response['estimated_delivery'] ?? null,
+        'last_update' => $response['last_updated']
+    ];
+}
 }
