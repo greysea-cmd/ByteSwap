@@ -1,6 +1,7 @@
 <?php
 require_once '../../app/config/database.php';
 require_once '../../app/controllers/ShippingController.php';
+
 $pendingShipments = $pdo->query("
     SELECT o.id, l.brand, l.model, o.tracking_number
     FROM orders o
@@ -36,3 +37,16 @@ $shipping = new ShippingController();
     </tr>
     <?php endforeach; ?>
 </table>
+<div class="widget-actions">
+    <button class="export-btn" data-type="shipping_status">
+        <i class="fas fa-download"></i> Export CSV
+    </button>
+</div>
+
+<script>
+document.querySelectorAll('.export-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        window.location = `/admin/export.php?type=${this.dataset.type}`;
+    });
+});
+</script>
