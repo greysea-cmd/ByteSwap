@@ -1,6 +1,6 @@
 <?php
 $orderId = $_GET['id'];
-$order = $pdo->query("SELECT * FROM orders WHERE id = ?", [$orderId])->fetch();
+$order = $pdo->query("SELECT * FROM orders WHERE id = ?", (int)$orderId)->fetch();
 ?>
 
 <div class="tracking-container">
