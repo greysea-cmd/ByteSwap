@@ -1,7 +1,7 @@
 <?php
 function adminOnly() {
     session_start();
-    if (!isset($_SESSION['user']) {
+    if (!isset($_SESSION['user'])) {
         header("Location: /login?redirect=/admin");
         exit();
     }
@@ -16,4 +16,13 @@ function adminOnly() {
         header("HTTP/1.1 403 Forbidden");
         exit("<h1>Access Denied</h1><p>Admins only.</p>");
     }
+
+    $pdo->prepare("
+    INSERT INTO admin_logs (user_id, action, ip) 
+    VALUES (?, ?, ?)
+    ")->execute([
+    $_SESSION['user']['id'],
+    $_SERVER['REQUEST_URI'],
+    $_SERVER['REMOTE_ADDR']
+]);
 }
